@@ -33,13 +33,11 @@ stages:
           dotnet workload install maui --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet7/nuget/v3/index.json --source https://api.nuget.org/v3/index.json
           dotnet workload install android ios maccatalyst tvos macos maui wasm-tools --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet7/nuget/v3/index.json --source https://api.nuget.org/v3/index.json
     
-    - task: Bash@3
-      displayName: Restore nuget
+    - task: NuGetCommand@2
       inputs:
-        targetType: 'inline'
-        script: |
-          cd 6.0/Apps/WeatherTwentyOne/src/
-          dotnet restore WeatherTwentyOne.sln
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+        feedsToUse: 'select'
 
   # https://docs.microsoft.com/en-us/dotnet/maui/android/deployment/overview
     - task: Bash@3
